@@ -1,0 +1,289 @@
+/* Lección Guardrails — todas las clases con prefijo guardrails- */
+
+/* ---------- pipeline ---------- */
+.guardrails-layer {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px dashed var(--border-strong);
+  background: var(--bg-sunken);
+  color: var(--text-3);
+  border-radius: 99px;
+  padding: 4px 11px;
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: line-through;
+}
+.guardrails-layer.is-on {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--c-guard) 55%, transparent);
+  background: color-mix(in srgb, var(--c-guard) 12%, var(--bg-elev));
+  color: var(--text);
+  text-decoration: none;
+}
+.guardrails-layer.is-on svg {
+  color: var(--c-guard);
+}
+.guardrails-input {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  border: 1px solid color-mix(in srgb, var(--c-user) 35%, var(--border));
+  background: color-mix(in srgb, var(--c-user) 6%, var(--bg-elev));
+  border-radius: 12px;
+  padding: 8px 12px;
+}
+.guardrails-input .who {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--c-user);
+}
+.guardrails-input .txt {
+  flex: 1 1 260px;
+  color: var(--text);
+  font-size: 14.5px;
+}
+.guardrails-flow {
+  overflow-x: auto;
+  margin: 8px 0 12px;
+}
+.guardrails-flow .flow {
+  min-width: 580px;
+}
+.guardrails-checks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.guardrails-checks li {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  padding: 5px 9px;
+  border-radius: 8px;
+  border-left: 3px solid var(--tone);
+  background: color-mix(in srgb, var(--tone) 7%, var(--bg-elev));
+  color: var(--text-2);
+}
+.guardrails-checks li .mono {
+  color: var(--tone);
+  font-size: 12px;
+}
+.guardrails-without {
+  font-size: 13.5px;
+  color: var(--text-2);
+  border: 1px dashed color-mix(in srgb, var(--c-error) 50%, transparent);
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: color-mix(in srgb, var(--c-error) 5%, transparent);
+}
+.guardrails-without strong {
+  color: var(--c-error);
+}
+.guardrails-payload {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--text);
+  max-height: 200px;
+  overflow-y: auto;
+}
+.guardrails-payload.is-final {
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  border-left: 3px solid var(--tone);
+  padding-left: 10px;
+}
+.guardrails-log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-2);
+  max-height: 160px;
+  overflow-y: auto;
+}
+.guardrails-log li {
+  padding: 2px 4px;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.guardrails-log li.is-new {
+  background: color-mix(in srgb, var(--c-guard) 14%, transparent);
+  color: var(--text);
+}
+.guardrails-outcome {
+  margin-top: 14px;
+  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--tone) 50%, transparent);
+  background: color-mix(in srgb, var(--tone) 10%, var(--bg-elev));
+  color: var(--text-2);
+  font-size: 14.5px;
+}
+.guardrails-outcome strong {
+  color: var(--tone);
+}
+
+/* ---------- PII ---------- */
+.guardrails-kind {
+  border: 1px dashed var(--border-strong);
+  background: var(--bg-sunken);
+  color: var(--text-3);
+  border-radius: 8px;
+  padding: 3px 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  cursor: pointer;
+}
+.guardrails-kind.is-on {
+  border-style: solid;
+  border-color: var(--tone);
+  background: color-mix(in srgb, var(--tone) 12%, var(--bg-elev));
+  color: var(--text);
+}
+.guardrails-hl {
+  font-size: 14px;
+  line-height: 2;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--text-2);
+}
+.guardrails-hit {
+  font: inherit;
+  line-height: 1.4;
+  border: 1px solid color-mix(in srgb, var(--tone) 55%, transparent);
+  background: color-mix(in srgb, var(--tone) 14%, transparent);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 0 4px;
+  cursor: pointer;
+}
+.guardrails-hit .tag {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--tone);
+  margin-left: 4px;
+  vertical-align: 1px;
+}
+.guardrails-hit.is-invalid {
+  border-style: dashed;
+  background: transparent;
+  color: var(--text-3);
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--text-3) 60%, transparent);
+}
+.guardrails-hit.is-sel {
+  outline: 2px solid var(--tone);
+  outline-offset: 1px;
+}
+.guardrails-masked {
+  font-size: 14px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--text);
+}
+.guardrails-vault {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px dashed var(--border-strong);
+  background: var(--bg-sunken);
+}
+.guardrails-calc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.guardrails-calc .cell {
+  display: grid;
+  justify-items: center;
+  min-width: 30px;
+  padding: 3px 4px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--bg-sunken);
+  font-family: var(--font-mono);
+  line-height: 1.3;
+}
+.guardrails-calc .cell.is-dbl {
+  border-color: color-mix(in srgb, var(--c-tool) 50%, transparent);
+  background: color-mix(in srgb, var(--c-tool) 9%, var(--bg-elev));
+}
+.guardrails-calc .d {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+.guardrails-calc .f {
+  font-size: 10px;
+  color: var(--text-3);
+}
+.guardrails-calc .p {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ---------- privilegios ---------- */
+.guardrails-matrix td {
+  vertical-align: middle;
+}
+.guardrails-matrix input {
+  accent-color: var(--accent);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+.guardrails-matrix input:disabled {
+  cursor: not-allowed;
+}
+.guardrails-matrix tr.is-off td {
+  opacity: 0.55;
+}
+.guardrails-matrix tr.is-off td:nth-child(3) {
+  opacity: 1;
+}
+.guardrails-meter {
+  height: 8px;
+  border-radius: 99px;
+  background: var(--bg-inset);
+  overflow: hidden;
+}
+.guardrails-meter span {
+  display: block;
+  height: 100%;
+  background: var(--tone);
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+.guardrails-cases {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13.5px;
+  color: var(--text-2);
+}
+.guardrails-cases li {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.guardrails-cases svg {
+  flex: none;
+  margin-top: 3px;
+}

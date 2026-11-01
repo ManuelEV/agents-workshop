@@ -1,0 +1,412 @@
+/* Lección A2A — todas las clases con prefijo a2a- */
+
+/* ---------- quiz ---------- */
+.a2a-quiz {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+@media (max-width: 760px) {
+  .a2a-quiz {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.a2a-quiz-item {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elev);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.25s, background 0.25s;
+}
+.a2a-quiz-item.is-ok {
+  border-color: color-mix(in srgb, var(--c-ok) 55%, transparent);
+  background: color-mix(in srgb, var(--c-ok) 6%, var(--bg-elev));
+}
+.a2a-quiz-item.is-bad {
+  border-color: color-mix(in srgb, var(--c-error) 55%, transparent);
+  background: color-mix(in srgb, var(--c-error) 5%, var(--bg-elev));
+}
+.a2a-quiz-q {
+  font-size: 14.5px;
+  color: var(--text);
+}
+.a2a-quiz-btn {
+  border: 1px solid color-mix(in srgb, var(--tone) 45%, var(--border));
+  background: color-mix(in srgb, var(--tone) 8%, var(--bg-elev));
+  color: var(--text);
+  border-radius: 8px;
+  padding: 4px 11px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.a2a-quiz-btn:hover:not(:disabled) {
+  border-color: var(--tone);
+}
+.a2a-quiz-btn:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+.a2a-quiz-btn.is-picked {
+  opacity: 1;
+  background: color-mix(in srgb, var(--tone) 22%, var(--bg-elev));
+  border-color: var(--tone);
+}
+.a2a-quiz-why {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 13.5px;
+  color: var(--text-2);
+}
+.a2a-quiz-why svg {
+  flex: none;
+  margin-top: 3px;
+}
+
+/* ---------- delegación ---------- */
+.a2a-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 16px;
+  margin: 12px 0 16px;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .a2a-top {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.a2a-actors,
+.a2a-sm-wrap {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elev);
+  padding: 8px;
+}
+.a2a-sm-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.a2a-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: 18px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .a2a-detail {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.a2a-bubble {
+  border-radius: 14px;
+  padding: 10px 14px;
+  background: color-mix(in srgb, var(--tone) 10%, var(--bg-elev));
+  border: 1px solid color-mix(in srgb, var(--tone) 35%, transparent);
+  font-size: 15px;
+}
+.a2a-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 12px;
+  border-left: 2px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+.a2a-timeline li {
+  position: relative;
+  margin: 0;
+}
+.a2a-timeline li::before {
+  content: '';
+  position: absolute;
+  left: -18px;
+  top: 10px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--tone);
+  border: 2px solid var(--bg-elev);
+}
+.a2a-timeline button {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  flex-wrap: wrap;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  padding: 3px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-2);
+}
+.a2a-timeline button:hover {
+  background: var(--bg-sunken);
+}
+.a2a-timeline li.is-cur button {
+  background: color-mix(in srgb, var(--tone) 12%, transparent);
+  color: var(--text);
+  font-weight: 600;
+}
+.a2a-timeline .t {
+  font-size: 11.5px;
+  color: var(--text-3);
+}
+.a2a-timeline .s {
+  font-size: 11px;
+  color: var(--tone);
+}
+
+/* ---------- máquina de estados ---------- */
+.a2a-sm {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.a2a-sm-edge path {
+  fill: none;
+  stroke: var(--border-strong);
+  stroke-width: 1.5;
+  transition: stroke 0.3s;
+}
+.a2a-sm-edge polygon {
+  fill: var(--border-strong);
+}
+.a2a-sm-edge.is-extra path {
+  stroke-dasharray: 4 4;
+}
+.a2a-sm-edge.is-last path {
+  stroke: var(--etone);
+  stroke-width: 2.4;
+  stroke-dasharray: 6 5;
+  animation: a2a-dash 0.7s linear infinite;
+}
+.a2a-sm-edge.is-last polygon {
+  fill: var(--etone);
+}
+@keyframes a2a-dash {
+  to {
+    stroke-dashoffset: -11;
+  }
+}
+.a2a-sm-packet {
+  fill: var(--etone);
+  filter: drop-shadow(0 0 3px var(--etone));
+}
+.a2a-sm-node .box {
+  fill: var(--bg-sunken);
+  stroke: color-mix(in srgb, var(--tone) 35%, var(--border));
+  stroke-width: 1.4;
+  transition: fill 0.3s, stroke 0.3s;
+}
+.a2a-sm-node .inner {
+  fill: none;
+  stroke: color-mix(in srgb, var(--tone) 35%, var(--border));
+  stroke-width: 1;
+}
+.a2a-sm-node .halo {
+  fill: none;
+  stroke: var(--tone);
+  stroke-width: 6;
+  stroke-opacity: 0.28;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.a2a-sm-node text {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  fill: var(--text-3);
+}
+.a2a-sm-node.is-visited .box {
+  fill: color-mix(in srgb, var(--tone) 6%, var(--bg-elev));
+}
+.a2a-sm-node.is-visited text {
+  fill: var(--text-2);
+}
+.a2a-sm-node.is-on .box {
+  fill: color-mix(in srgb, var(--tone) 20%, var(--bg-elev));
+  stroke: var(--tone);
+  stroke-width: 2.4;
+}
+.a2a-sm-node.is-on .halo {
+  opacity: 1;
+  animation: a2a-glow 1.6s ease-in-out infinite;
+}
+.a2a-sm-node.is-on text {
+  fill: var(--text);
+}
+@keyframes a2a-glow {
+  50% {
+    stroke-opacity: 0.08;
+  }
+}
+.a2a-sm-cap {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  fill: var(--text-3);
+}
+
+/* ---------- lab de estados ---------- */
+.a2a-statelab {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .a2a-statelab {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.a2a-evs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.a2a-ev {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  border: 1px solid color-mix(in srgb, var(--tone) 45%, var(--border));
+  background: color-mix(in srgb, var(--tone) 7%, var(--bg-elev));
+  border-radius: 9px;
+  padding: 5px 10px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+}
+.a2a-ev:hover:not(:disabled) {
+  border-color: var(--tone);
+  background: color-mix(in srgb, var(--tone) 15%, var(--bg-elev));
+}
+.a2a-ev:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  border-style: dashed;
+}
+.a2a-ev-to {
+  font-size: 10.5px;
+  color: var(--tone);
+}
+.a2a-hist {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 13px;
+  color: var(--text-2);
+  max-height: 150px;
+  overflow-y: auto;
+}
+.a2a-hist li {
+  margin-bottom: 2px;
+}
+
+/* ---------- polling / streaming / push ---------- */
+.a2a-upd-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elev);
+}
+.a2a-upd {
+  display: block;
+  width: 100%;
+  min-width: 600px;
+  height: auto;
+}
+.a2a-upd-lane {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  fill: var(--tone);
+}
+.a2a-upd-axis {
+  stroke: var(--border);
+  stroke-width: 1.2;
+}
+.a2a-upd-guide {
+  stroke: var(--border);
+  stroke-dasharray: 2 4;
+}
+.a2a-upd-ev rect {
+  fill: var(--bg-inset);
+  stroke: var(--border-strong);
+}
+.a2a-upd-ev text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--text-3);
+}
+.a2a-upd-ev.is-on rect {
+  fill: var(--c-tool);
+  stroke: var(--c-tool);
+}
+.a2a-upd-ev.is-on text {
+  fill: var(--text);
+}
+.a2a-upd-ev.is-on .a2a-upd-guide {
+  stroke: color-mix(in srgb, var(--c-tool) 45%, transparent);
+}
+.a2a-upd-poll line {
+  stroke: var(--text-3);
+  stroke-width: 1.2;
+}
+.a2a-upd-poll circle {
+  fill: var(--bg-elev);
+  stroke: var(--text-3);
+  stroke-width: 1.5;
+}
+.a2a-upd-poll.is-hit circle {
+  fill: var(--c-model);
+  stroke: var(--c-model);
+}
+.a2a-upd-lag {
+  fill: color-mix(in srgb, var(--c-error) 35%, transparent);
+}
+.a2a-upd-conn {
+  fill: color-mix(in srgb, var(--c-model) 35%, transparent);
+  stroke: var(--c-model);
+  stroke-width: 1;
+}
+.a2a-upd-conn.is-long {
+  fill: color-mix(in srgb, var(--c-error) 25%, transparent);
+  stroke: var(--c-error);
+}
+.a2a-upd-dot {
+  fill: var(--c-model);
+}
+.a2a-upd-idle {
+  stroke: var(--border-strong);
+  stroke-dasharray: 3 5;
+}
+.a2a-upd-hook path {
+  stroke: var(--c-model);
+  stroke-width: 2;
+}
+.a2a-upd-hook polygon {
+  fill: var(--c-model);
+}
+.a2a-upd-head {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+.a2a-upd-time {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--accent);
+}

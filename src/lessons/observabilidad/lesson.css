@@ -1,0 +1,400 @@
+/* Lección observabilidad · todas las clases con prefijo .observabilidad- */
+
+/* ---------- waterfall ---------- */
+.observabilidad-trace {
+  --obs-name: 220px;
+  margin: 14px 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elev);
+  padding: 6px 10px 10px;
+}
+@media (max-width: 640px) {
+  .observabilidad-trace {
+    --obs-name: 118px;
+    padding: 6px 6px 10px;
+  }
+}
+.observabilidad-axis,
+.observabilidad-row {
+  display: grid;
+  grid-template-columns: var(--obs-name) minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+}
+.observabilidad-ticks {
+  position: relative;
+  height: 20px;
+}
+.observabilidad-ticks span {
+  position: absolute;
+  top: 2px;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-3);
+}
+.observabilidad-ticks span:first-child {
+  transform: none;
+}
+.observabilidad-row {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 4px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s, opacity 0.3s;
+}
+.observabilidad-row:hover {
+  background: var(--bg-sunken);
+}
+.observabilidad-row.is-sel {
+  background: color-mix(in srgb, var(--tone) 9%, transparent);
+}
+.observabilidad-row.is-future {
+  opacity: 0.4;
+}
+.observabilidad-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text);
+  padding-left: 4px;
+}
+.observabilidad-name > svg {
+  color: var(--tone);
+  flex-shrink: 0;
+}
+.observabilidad-name > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.observabilidad-name.is-child {
+  padding-left: 18px;
+  position: relative;
+}
+.observabilidad-name.is-child::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: -6px;
+  width: 6px;
+  height: 14px;
+  border-left: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-strong);
+  border-bottom-left-radius: 3px;
+}
+@media (max-width: 640px) {
+  .observabilidad-name.is-child {
+    padding-left: 10px;
+  }
+  .observabilidad-name.is-child::before {
+    display: none;
+  }
+}
+.observabilidad-lane {
+  position: relative;
+  height: 24px;
+  background: var(--bg-sunken);
+  border-radius: 6px;
+}
+.observabilidad-gridline {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+.observabilidad-bar {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--tone) 70%, transparent);
+  border: 1px solid var(--tone);
+  transition: width 0.9s linear;
+  min-width: 0;
+  overflow: visible;
+}
+.observabilidad-row[data-tone='system'] .observabilidad-bar {
+  background: color-mix(in srgb, var(--tone) 25%, transparent);
+}
+.observabilidad-row.is-crit .observabilidad-bar {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tone) 35%, transparent);
+}
+.observabilidad-bar-lbl {
+  position: absolute;
+  left: calc(100% + 5px);
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+.observabilidad-row[data-tone='system'] .observabilidad-bar-lbl {
+  left: auto;
+  right: 6px;
+}
+.observabilidad-cursor {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--accent);
+  opacity: 0.6;
+  transition: left 0.9s linear;
+  pointer-events: none;
+  z-index: 1;
+}
+.observabilidad-trace-bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .observabilidad-trace-bottom {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.observabilidad-attr {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  padding: 3px 0;
+  border-bottom: 1px dashed var(--border);
+}
+.observabilidad-attr .k {
+  color: var(--c-model);
+  word-break: break-all;
+}
+.observabilidad-attr.is-custom .k {
+  color: var(--text-3);
+}
+.observabilidad-attr .v {
+  color: var(--text);
+  text-align: right;
+  word-break: break-all;
+  max-width: 220px;
+}
+.observabilidad-stack-bar {
+  display: flex;
+  height: 22px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--bg-inset);
+}
+.observabilidad-stack-bar span {
+  background: var(--tone);
+  color: var(--bg-elev);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.observabilidad-totals {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px;
+  margin-top: 14px;
+}
+
+/* ---------- costos ---------- */
+.observabilidad-cost-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .observabilidad-cost-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.observabilidad-big {
+  border: 1px solid color-mix(in srgb, var(--tone) 45%, var(--border));
+  background: color-mix(in srgb, var(--tone) 8%, var(--bg-elev));
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+.observabilidad-big-n {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--tone);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- evaluación ---------- */
+.observabilidad-eval {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 16px;
+  margin-top: 14px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .observabilidad-eval {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.observabilidad-eval-tbl td,
+.observabilidad-eval-tbl th {
+  padding: 7px 8px;
+  vertical-align: middle;
+}
+.observabilidad-eval-q {
+  font-size: 13px;
+  color: var(--text);
+  min-width: 150px;
+}
+.observabilidad-ok {
+  color: var(--c-ok);
+}
+.observabilidad-bad {
+  color: var(--c-error);
+}
+.observabilidad-spin {
+  color: var(--accent);
+  animation: observabilidad-rot 0.9s linear infinite;
+}
+@keyframes observabilidad-rot {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.observabilidad-grader {
+  border-radius: 8px;
+  padding: 6px 9px;
+  border: 1px solid var(--border);
+}
+.observabilidad-grader.is-ok {
+  border-color: color-mix(in srgb, var(--c-ok) 45%, var(--border));
+  background: color-mix(in srgb, var(--c-ok) 7%, transparent);
+}
+.observabilidad-grader.is-bad {
+  border-color: color-mix(in srgb, var(--c-error) 45%, var(--border));
+  background: color-mix(in srgb, var(--c-error) 7%, transparent);
+}
+.observabilidad-answer {
+  border: 1px solid color-mix(in srgb, var(--c-model) 35%, var(--border));
+  border-radius: 12px 12px 12px 4px;
+  background: color-mix(in srgb, var(--c-model) 6%, var(--bg-elev));
+  padding: 8px 11px;
+  font-size: 13.5px;
+}
+.observabilidad-judge {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+.observabilidad-dots {
+  display: inline-flex;
+  gap: 3px;
+}
+.observabilidad-dots span {
+  width: 18px;
+  height: 8px;
+  border-radius: 3px;
+  background: var(--bg-inset);
+}
+.observabilidad-dots[data-score='3'] span.on {
+  background: var(--c-ok);
+}
+.observabilidad-dots[data-score='2'] span.on {
+  background: var(--c-guard);
+}
+.observabilidad-dots[data-score='1'] span.on {
+  background: var(--c-error);
+}
+.observabilidad-ul {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.observabilidad-eval-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(120px, 1fr)) minmax(220px, 1.6fr);
+  gap: 8px;
+  margin-top: 14px;
+  align-items: stretch;
+}
+@media (max-width: 900px) {
+  .observabilidad-eval-metrics {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  }
+  .observabilidad-crit {
+    grid-column: 1 / -1;
+  }
+}
+.observabilidad-crit {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elev);
+  padding: 8px 12px;
+}
+.observabilidad-crit .bar-row {
+  font-size: 12px;
+  grid-template-columns: 110px 1fr 40px;
+}
+.observabilidad-gate {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-top: 14px;
+  border: 1px solid color-mix(in srgb, var(--tone) 50%, var(--border));
+  background: color-mix(in srgb, var(--tone) 9%, var(--bg-elev));
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+.observabilidad-gate > svg {
+  color: var(--tone);
+  flex-shrink: 0;
+}
+.observabilidad-gate-title {
+  font-weight: 600;
+  color: var(--tone);
+}
+.observabilidad-details {
+  margin-top: 12px;
+}
+.observabilidad-details summary {
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-2);
+  margin-bottom: 8px;
+}
+
+/* ---------- ciclo ---------- */
+.observabilidad-cycle-info {
+  margin-top: 12px;
+  border-left: 3px solid var(--accent);
+  background: var(--bg-sunken);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 14px;
+}

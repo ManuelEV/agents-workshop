@@ -1,0 +1,297 @@
+/* Lección decision-herramienta · todas las clases con prefijo .decision-herramienta- */
+
+.decision-herramienta-q {
+  border-left: 4px solid var(--c-user);
+  background: color-mix(in srgb, var(--c-user) 7%, var(--bg-elev));
+  border-radius: 8px;
+  padding: 7px 11px;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+.decision-herramienta-q .label {
+  color: var(--c-user);
+  margin-right: 6px;
+}
+
+/* ---------- prompt como lo ve el modelo ---------- */
+.decision-herramienta-prompt-wrap {
+  margin-top: 12px;
+}
+.decision-herramienta-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.decision-herramienta-legend-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+  border-radius: 8px;
+  padding: 4px 10px 6px;
+  font-size: 13px;
+  cursor: pointer;
+  overflow: hidden;
+}
+.decision-herramienta-legend-item .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--tone);
+}
+.decision-herramienta-legend-item.is-on {
+  border-color: var(--tone);
+  background: color-mix(in srgb, var(--tone) 10%, var(--bg-elev));
+}
+.decision-herramienta-legend-bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--tone);
+  opacity: 0.7;
+}
+.decision-herramienta-prompt {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.55;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  max-height: 380px;
+  overflow: auto;
+}
+.decision-herramienta-seg {
+  border-left: 3px solid var(--tone);
+  padding: 4px 0 4px 10px;
+  margin-bottom: 6px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  transition: opacity 0.3s;
+}
+.decision-herramienta-seg.is-dim {
+  opacity: 0.3;
+}
+.decision-herramienta-seg-text {
+  display: block;
+  color: var(--text);
+}
+.decision-herramienta-special {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--tone);
+  background: color-mix(in srgb, var(--tone) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tone) 45%, transparent);
+  border-radius: 5px;
+  padding: 0 5px;
+  margin: 1px 0;
+}
+
+/* ---------- token a token ---------- */
+.decision-herramienta-token-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 16px;
+  margin-top: 14px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .decision-herramienta-token-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.decision-herramienta-att {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.decision-herramienta-att .row-lbl {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  fill: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.decision-herramienta-att .tok .box {
+  fill: color-mix(in srgb, var(--tone) 8%, var(--bg-elev));
+  stroke: color-mix(in srgb, var(--tone) 35%, var(--border));
+  transition: fill 0.35s, stroke 0.35s;
+}
+.decision-herramienta-att .tok .box.is-att {
+  fill: color-mix(in srgb, var(--tone) calc(var(--w) * 55%), var(--bg-elev));
+  stroke: var(--tone);
+  stroke-width: 1.5;
+}
+.decision-herramienta-att .tok text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  fill: var(--text);
+}
+.decision-herramienta-att .tok.gen .box {
+  fill: color-mix(in srgb, var(--tone) 16%, var(--bg-elev));
+  stroke: color-mix(in srgb, var(--tone) 55%, var(--border));
+}
+.decision-herramienta-att .tok.gen.is-cur .box {
+  stroke: var(--tone);
+  stroke-width: 2.5;
+  fill: color-mix(in srgb, var(--tone) 28%, var(--bg-elev));
+}
+.decision-herramienta-att .tok.gen.is-cur {
+  animation: fade-in 0.4s ease both;
+}
+.decision-herramienta-att .arc {
+  fill: none;
+  stroke: var(--tone);
+  stroke-linecap: round;
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  animation: decision-herramienta-draw 0.7s ease forwards;
+}
+.decision-herramienta-att .cursor {
+  fill: var(--accent);
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes decision-herramienta-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.decision-herramienta-split {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border);
+  font-family: var(--font-mono);
+}
+.decision-herramienta-split span {
+  color: var(--tone);
+}
+.decision-herramienta-raw {
+  word-break: break-all;
+  background: var(--bg-inset);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+.decision-herramienta-down {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+/* ---------- qué cambia la decisión ---------- */
+.decision-herramienta-ctrls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 12px 16px;
+  align-items: start;
+}
+.decision-herramienta-ctrls .segmented {
+  flex-wrap: wrap;
+}
+.decision-herramienta-out {
+  margin-top: 14px;
+  border: 1px solid color-mix(in srgb, var(--tone) 45%, var(--border));
+  background: color-mix(in srgb, var(--tone) 6%, var(--bg-elev));
+  border-radius: 12px;
+  padding: 12px;
+}
+.decision-herramienta-out-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.decision-herramienta-out-head > svg {
+  color: var(--tone);
+}
+.decision-herramienta-bubble {
+  border: 1px solid color-mix(in srgb, var(--c-model) 35%, var(--border));
+  border-radius: 14px 14px 14px 4px;
+  background: color-mix(in srgb, var(--c-model) 7%, var(--bg-elev));
+  padding: 10px 13px;
+  font-size: 14px;
+}
+
+/* ---------- decodificación restringida ---------- */
+.decision-herramienta-args {
+  font-size: 13.5px;
+  word-break: break-all;
+  line-height: 1.8;
+}
+.decision-herramienta-argtok {
+  background: color-mix(in srgb, var(--c-data) 16%, transparent);
+  border-radius: 4px;
+  padding: 1px 2px;
+  margin: 0 1px;
+}
+.decision-herramienta-argtok.is-new {
+  background: color-mix(in srgb, var(--c-data) 34%, transparent);
+  box-shadow: 0 0 0 1.5px var(--c-data);
+  animation: pop-in 0.35s ease both;
+}
+.decision-herramienta-rule {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  border: 1px dashed color-mix(in srgb, var(--c-guard) 55%, var(--border));
+  background: color-mix(in srgb, var(--c-guard) 8%, transparent);
+  border-radius: 8px;
+  padding: 7px 10px;
+  color: var(--text);
+}
+.decision-herramienta-rule svg {
+  color: var(--c-guard);
+}
+.decision-herramienta-ctab {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  gap: 6px 12px;
+  align-items: center;
+}
+.decision-herramienta-crow {
+  display: contents;
+}
+.decision-herramienta-crow .bar-row {
+  grid-template-columns: 1fr 48px;
+}
+.decision-herramienta-crow .bar-row .bl {
+  display: none;
+}
+.decision-herramienta-crow.is-masked > .mono:first-child {
+  text-decoration: line-through;
+  color: var(--c-error);
+}
+.decision-herramienta-verdict {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  border: 1px solid color-mix(in srgb, var(--tone) 50%, var(--border));
+  background: color-mix(in srgb, var(--tone) 9%, var(--bg-elev));
+  border-radius: 12px;
+  padding: 14px;
+}
+.decision-herramienta-verdict > svg {
+  color: var(--tone);
+  flex-shrink: 0;
+}
+.decision-herramienta-verdict-title {
+  font-weight: 600;
+  color: var(--tone);
+  font-size: 15px;
+}

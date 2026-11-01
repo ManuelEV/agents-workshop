@@ -1,0 +1,531 @@
+/* Lección loop-agente · todas las clases con prefijo .loop-agente- */
+
+/* ---------- centerpiece: ejecución ---------- */
+.loop-agente-user {
+  border: 1px solid color-mix(in srgb, var(--c-user) 35%, var(--border));
+  border-left: 4px solid var(--c-user);
+  background: color-mix(in srgb, var(--c-user) 7%, var(--bg-elev));
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+.loop-agente-user .label {
+  color: var(--c-user);
+  margin-right: 6px;
+}
+.loop-agente-run {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 16px;
+  margin: 14px 0;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .loop-agente-run {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.loop-agente-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.loop-agente-call {
+  background: var(--bg-inset);
+  border-radius: 8px;
+  padding: 8px 10px;
+  word-break: break-word;
+}
+.loop-agente-str {
+  color: var(--c-tool);
+}
+.loop-agente-bubble {
+  border: 1px solid color-mix(in srgb, var(--c-model) 35%, var(--border));
+  border-radius: 14px 14px 14px 4px;
+  background: color-mix(in srgb, var(--c-model) 7%, var(--bg-elev));
+  padding: 10px 13px;
+}
+.loop-agente-bubble-text {
+  white-space: pre-wrap;
+  font-size: 14px;
+  line-height: 1.55;
+  margin-top: 4px;
+  min-height: 3em;
+}
+
+/* ---------- anillo del loop ---------- */
+.loop-agente-ring {
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  overflow: visible;
+}
+.loop-agente-ring-track {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 1;
+  stroke-dasharray: 3 5;
+}
+.loop-agente-ring-arc {
+  fill: none;
+  stroke: var(--border-strong);
+  stroke-width: 2;
+  transition: stroke 0.3s, stroke-width 0.3s;
+}
+.loop-agente-ring-arc.is-active {
+  stroke: var(--tone);
+  stroke-width: 3.5;
+  stroke-dasharray: 7 6;
+  animation: loop-agente-dash 0.9s linear infinite;
+}
+.loop-agente-ring-arrowhead {
+  fill: var(--text-3);
+}
+.loop-agente-ring-exit {
+  stroke: var(--border-strong);
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+}
+.loop-agente-ring-exit.is-active {
+  stroke: var(--c-ok);
+  stroke-width: 3;
+  animation: loop-agente-dash 0.9s linear infinite;
+}
+.loop-agente-ring-exit-lbl {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  fill: var(--text-3);
+}
+.loop-agente-ring-pulse {
+  transition: transform 1s cubic-bezier(0.45, 0, 0.25, 1);
+}
+.loop-agente-ring-glow {
+  fill: color-mix(in srgb, var(--tone) 18%, transparent);
+  stroke: var(--tone);
+  stroke-width: 2;
+  animation: loop-agente-breathe 1.6s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.loop-agente-ring-node .disc {
+  fill: var(--bg-elev);
+  stroke: color-mix(in srgb, var(--tone) 55%, var(--border));
+  stroke-width: 1.5;
+  transition: fill 0.3s, stroke-width 0.3s;
+}
+.loop-agente-ring-node .ico {
+  color: var(--tone);
+  stroke: var(--tone);
+}
+.loop-agente-ring-node .lbl {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  fill: var(--text-2);
+}
+.loop-agente-ring-node .sub {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  fill: var(--text-3);
+}
+.loop-agente-ring-node.is-active .disc {
+  fill: color-mix(in srgb, var(--tone) 22%, var(--bg-elev));
+  stroke: var(--tone);
+  stroke-width: 2.5;
+}
+.loop-agente-ring-node.is-active .lbl {
+  fill: var(--tone);
+}
+.loop-agente-ring-center .disc {
+  fill: var(--bg-sunken);
+  stroke: var(--border);
+  transition: fill 0.4s, stroke 0.4s;
+}
+.loop-agente-ring-center .big {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  fill: var(--c-model);
+}
+.loop-agente-ring-center .sub {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  fill: var(--text-3);
+}
+.loop-agente-ring-center.is-done .disc {
+  fill: color-mix(in srgb, var(--c-ok) 18%, var(--bg-elev));
+  stroke: var(--c-ok);
+  stroke-width: 2;
+}
+.loop-agente-ring-center.is-done .big {
+  fill: var(--c-ok);
+}
+@keyframes loop-agente-dash {
+  to {
+    stroke-dashoffset: -13;
+  }
+}
+@keyframes loop-agente-breathe {
+  50% {
+    transform: scale(1.12);
+    opacity: 0.75;
+  }
+}
+
+/* ---------- guardrails ---------- */
+.loop-agente-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  align-items: end;
+  margin-bottom: 16px;
+}
+.loop-agente-iters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.loop-agente-iter {
+  flex: 0 1 118px;
+  min-width: 100px;
+  border: 1px solid color-mix(in srgb, var(--tone) 40%, var(--border));
+  border-top: 3px solid var(--tone);
+  background: color-mix(in srgb, var(--tone) 6%, var(--bg-elev));
+  border-radius: 10px;
+  padding: 6px 9px;
+  font-size: 12px;
+  line-height: 1.35;
+}
+.loop-agente-iter.is-cut {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: var(--tone);
+  border-style: dashed;
+  flex-basis: 80px;
+  min-width: 80px;
+}
+.loop-agente-iter-n {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  color: var(--tone);
+  font-weight: 600;
+}
+.loop-agente-iter-what {
+  font-size: 11.5px;
+  font-weight: 600;
+  word-break: break-all;
+}
+.loop-agente-iter-tok {
+  font-size: 10.5px;
+  color: var(--text-3);
+  margin-top: 2px;
+}
+.loop-agente-guard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .loop-agente-guard-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.loop-agente-chart {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.loop-agente-chart .grid {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+.loop-agente-chart .ax {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  fill: var(--text-3);
+}
+.loop-agente-chart .ax-cost {
+  fill: var(--c-guard);
+}
+.loop-agente-chart .in {
+  fill: color-mix(in srgb, var(--c-model) 45%, transparent);
+}
+.loop-agente-chart .out {
+  fill: var(--c-model);
+}
+.loop-agente-chart .ghost {
+  fill: none;
+  stroke: var(--border-strong);
+  stroke-dasharray: 3 3;
+}
+.loop-agente-chart .ghost-over {
+  fill: color-mix(in srgb, var(--c-guard) 8%, transparent);
+  stroke: color-mix(in srgb, var(--c-guard) 45%, transparent);
+  stroke-dasharray: 3 3;
+}
+.loop-agente-chart-bar {
+  transform-box: fill-box;
+  transform-origin: bottom;
+  animation: loop-agente-grow 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.loop-agente-chart .cost {
+  fill: none;
+  stroke: var(--c-guard);
+  stroke-width: 2;
+}
+.loop-agente-chart .cost-dot {
+  fill: var(--bg-elev);
+  stroke: var(--c-guard);
+  stroke-width: 2;
+}
+.loop-agente-chart .limit {
+  stroke: var(--c-guard);
+  stroke-width: 2;
+  stroke-dasharray: 5 4;
+}
+@keyframes loop-agente-grow {
+  from {
+    transform: scaleY(0);
+  }
+}
+.loop-agente-key {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  margin: 0 3px 0 8px;
+  vertical-align: -1px;
+}
+.loop-agente-key.in {
+  background: color-mix(in srgb, var(--c-model) 45%, transparent);
+}
+.loop-agente-key.out {
+  background: var(--c-model);
+}
+.loop-agente-key.cost {
+  background: var(--c-guard);
+  height: 3px;
+  vertical-align: 2px;
+}
+.loop-agente-end {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  border: 1px solid color-mix(in srgb, var(--tone) 45%, var(--border));
+  background: color-mix(in srgb, var(--tone) 9%, var(--bg-elev));
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+.loop-agente-end > svg {
+  color: var(--tone);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.loop-agente-end-title {
+  font-weight: 600;
+  color: var(--tone);
+  font-size: 14px;
+}
+.loop-agente-details {
+  margin-top: 12px;
+}
+.loop-agente-details summary {
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-2);
+  margin-bottom: 8px;
+}
+
+/* ---------- quién hace qué ---------- */
+.loop-agente-who {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 10px;
+}
+.loop-agente-who-item {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elev);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 0.3s, background 0.3s;
+}
+.loop-agente-who-item.is-ok {
+  border-color: color-mix(in srgb, var(--c-ok) 55%, var(--border));
+  background: color-mix(in srgb, var(--c-ok) 6%, var(--bg-elev));
+}
+.loop-agente-who-item.is-bad {
+  border-color: color-mix(in srgb, var(--c-error) 55%, var(--border));
+  background: color-mix(in srgb, var(--c-error) 6%, var(--bg-elev));
+}
+.loop-agente-who-text {
+  font-size: 14px;
+  font-weight: 500;
+}
+.loop-agente-who-btn {
+  gap: 5px;
+}
+.loop-agente-who-btn.is-picked {
+  border-color: var(--tone);
+  color: var(--tone);
+  background: color-mix(in srgb, var(--tone) 12%, var(--bg-elev));
+}
+.loop-agente-who-why {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.45;
+}
+.loop-agente-who-item.is-ok .loop-agente-who-why svg {
+  color: var(--c-ok);
+  vertical-align: -2px;
+}
+.loop-agente-who-item.is-bad .loop-agente-who-why svg {
+  color: var(--c-error);
+  vertical-align: -2px;
+}
+
+/* ---------- ReAct ---------- */
+.loop-agente-react {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.loop-agente-react-line,
+.loop-agente-native {
+  text-align: left;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--tone);
+  border-radius: 8px;
+  background: var(--bg-elev);
+  padding: 6px 9px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.45;
+  cursor: pointer;
+  word-break: break-word;
+  transition: background 0.2s, box-shadow 0.2s, opacity 0.2s;
+}
+.loop-agente-native {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+}
+.loop-agente-native-role {
+  font-size: 10.5px;
+  color: var(--tone);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.loop-agente-react-line:hover,
+.loop-agente-native:hover {
+  background: color-mix(in srgb, var(--tone) 6%, var(--bg-elev));
+}
+.loop-agente-react-line.is-hl,
+.loop-agente-native.is-hl {
+  background: color-mix(in srgb, var(--tone) 13%, var(--bg-elev));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tone) 50%, transparent);
+}
+.loop-agente-react-how {
+  margin-top: 14px;
+  border: 1px dashed color-mix(in srgb, var(--tone) 50%, var(--border));
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  background: color-mix(in srgb, var(--tone) 5%, transparent);
+}
+
+/* ---------- workflow vs agente ---------- */
+.loop-agente-wf-msg {
+  margin: 12px 0;
+  border-left: 4px solid var(--tone);
+  background: color-mix(in srgb, var(--tone) 7%, var(--bg-elev));
+  border-radius: 8px;
+  padding: 7px 11px;
+  font-size: 14px;
+}
+.loop-agente-wf-msg .label {
+  color: var(--tone);
+  margin-right: 6px;
+}
+.loop-agente-wf {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elev);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.loop-agente-wf-head {
+  font-family: var(--font-display);
+  font-size: 15px;
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.loop-agente-wf-path {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.loop-agente-routes {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.loop-agente-node {
+  display: inline-flex;
+  gap: 4px;
+  align-items: baseline;
+  border: 1px solid color-mix(in srgb, var(--tone) 45%, var(--border));
+  background: color-mix(in srgb, var(--tone) 10%, var(--bg-elev));
+  color: var(--text);
+  border-radius: 8px;
+  padding: 3px 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  transition: opacity 0.3s;
+}
+.loop-agente-node.is-on {
+  border-color: var(--tone);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tone) 30%, transparent);
+  font-weight: 600;
+}
+.loop-agente-node.is-off {
+  opacity: 0.35;
+}
+.loop-agente-arr {
+  color: var(--text-3);
+  flex-shrink: 0;
+}
+.loop-agente-wf-result {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  font-size: 13.5px;
+  color: var(--text);
+  border-radius: 8px;
+  padding: 7px 9px;
+  background: color-mix(in srgb, var(--tone) 9%, transparent);
+}
+.loop-agente-wf-result svg {
+  color: var(--tone);
+  flex-shrink: 0;
+  margin-top: 3px;
+}

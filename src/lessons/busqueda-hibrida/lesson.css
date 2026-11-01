@@ -1,0 +1,375 @@
+/* Lección: búsqueda híbrida y reranking. Todas las clases con prefijo busqueda-hibrida- */
+
+.busqueda-hibrida-query {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-3);
+}
+
+.busqueda-hibrida-mark {
+  background: color-mix(in srgb, var(--c-tool) 22%, transparent);
+  color: var(--text);
+  border-radius: 4px;
+  padding: 0 2px;
+}
+
+/* listas de ranking (lab 1) */
+.busqueda-hibrida-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.busqueda-hibrida-list li {
+  margin: 0;
+  border-radius: 8px;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.busqueda-hibrida-list li[data-hl='true'] {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+.busqueda-hibrida-list li[data-pick='true'] .busqueda-hibrida-rank {
+  background: var(--c-tool);
+  color: var(--bg);
+}
+.busqueda-hibrida-item {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 5px 6px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: default;
+}
+button.busqueda-hibrida-item {
+  cursor: pointer;
+}
+.busqueda-hibrida-rank {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 6px;
+  background: var(--bg-inset);
+  color: var(--text-2);
+  line-height: 20px;
+}
+.busqueda-hibrida-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.busqueda-hibrida-id {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.busqueda-hibrida-score {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-2);
+}
+.busqueda-hibrida-bar {
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--bg-inset);
+  overflow: hidden;
+}
+.busqueda-hibrida-bar > span {
+  display: block;
+  height: 100%;
+  background: var(--tone);
+  border-radius: 3px;
+  transition: width 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.busqueda-hibrida-src {
+  display: inline-flex;
+  gap: 3px;
+  margin-left: 4px;
+  vertical-align: 1px;
+}
+.busqueda-hibrida-src > span {
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 0 4px;
+  border-radius: 4px;
+  line-height: 15px;
+  color: var(--tone);
+  background: color-mix(in srgb, var(--tone) 15%, transparent);
+}
+.busqueda-hibrida-empty {
+  font-size: 13px;
+  color: var(--text-2);
+  border: 1px dashed var(--border-strong);
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 6px;
+}
+.busqueda-hibrida-preview {
+  margin-top: 12px;
+  font-size: 13.5px;
+  color: var(--text-2);
+  background: var(--bg-sunken);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 12px;
+  line-height: 1.55;
+}
+
+/* fórmula BM25 (lab 2) */
+.busqueda-hibrida-formula {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-2);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.busqueda-hibrida-formula > div {
+  border-left: 3px solid var(--c-tool);
+  padding-left: 9px;
+}
+.busqueda-hibrida-formula b {
+  color: var(--text);
+}
+.busqueda-hibrida-axis {
+  font: 10px var(--font-mono);
+  fill: var(--text-3);
+}
+
+/* escenario animado (labs 3 y 4) */
+.busqueda-hibrida-cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.busqueda-hibrida-colhead {
+  margin-bottom: 6px;
+}
+.busqueda-hibrida-colhead > span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--tone);
+  border-bottom: 2px solid var(--tone);
+  padding-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.busqueda-hibrida-stage {
+  position: relative;
+  transition: height 0.4s;
+}
+.busqueda-hibrida-guide {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50px;
+  border-top: 1px dashed var(--border);
+  pointer-events: none;
+}
+.busqueda-hibrida-guide span {
+  position: absolute;
+  right: 2px;
+  top: 1px;
+  font: 9px var(--font-mono);
+  color: var(--text-3);
+}
+.busqueda-hibrida-chip {
+  position: absolute;
+  height: 42px;
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1px;
+  padding: 0 8px;
+  border-radius: 9px;
+  border: 1px solid color-mix(in srgb, var(--tone) 45%, var(--border));
+  border-left: 4px solid var(--tone);
+  background: color-mix(in srgb, var(--tone) 8%, var(--bg-elev));
+  overflow: hidden;
+  transition:
+    left 0.9s cubic-bezier(0.3, 0.8, 0.25, 1),
+    top 0.9s cubic-bezier(0.3, 0.8, 0.25, 1),
+    opacity 0.5s,
+    box-shadow 0.3s;
+}
+.busqueda-hibrida-chip.is-empty {
+  border: 1px dashed var(--border-strong);
+  background: var(--bg-sunken);
+  color: var(--text-3);
+  font-size: 12px;
+  line-height: 1.35;
+  padding: 6px 8px;
+}
+.busqueda-hibrida-chip.is-fly {
+  z-index: 2;
+  box-shadow: var(--shadow);
+}
+.busqueda-hibrida-chip.is-top {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+.busqueda-hibrida-chip-id {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text);
+}
+.busqueda-hibrida-chip-v {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 560px) {
+  .busqueda-hibrida-hide-sm {
+    display: none;
+  }
+  .busqueda-hibrida-chip {
+    padding: 0 5px;
+  }
+  .busqueda-hibrida-chip-id {
+    font-size: 10px;
+  }
+}
+
+/* reranker */
+.busqueda-hibrida-xenc {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-sunken);
+  transition: border-color 0.3s;
+}
+.busqueda-hibrida-xenc[data-active='true'] {
+  border-color: var(--c-model);
+}
+.busqueda-hibrida-xenc-in {
+  flex: 1 1 260px;
+  min-width: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+.busqueda-hibrida-tag {
+  font: 600 10.5px var(--font-mono);
+  color: var(--c-model);
+}
+.busqueda-hibrida-q {
+  color: var(--c-user);
+  font-weight: 600;
+}
+.busqueda-hibrida-xenc-arrow {
+  color: var(--text-3);
+}
+.busqueda-hibrida-xenc-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font: 600 12px var(--font-mono);
+  color: var(--c-model);
+  border: 1.5px solid var(--c-model);
+  background: color-mix(in srgb, var(--c-model) 10%, var(--bg-elev));
+}
+.busqueda-hibrida-xenc[data-active='true'] .busqueda-hibrida-xenc-box svg {
+  animation: busqueda-hibrida-spin 1.2s linear infinite;
+}
+@keyframes busqueda-hibrida-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.busqueda-hibrida-xenc-out {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--c-model);
+  min-width: 52px;
+  text-align: center;
+}
+.busqueda-hibrida-rr {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 52px;
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) minmax(90px, 26%);
+  gap: 10px;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+  transition:
+    top 0.9s cubic-bezier(0.3, 0.8, 0.25, 1),
+    opacity 0.4s,
+    border-color 0.3s,
+    background 0.3s;
+}
+.busqueda-hibrida-rr.is-reading {
+  border-color: var(--c-model);
+  background: color-mix(in srgb, var(--c-model) 9%, var(--bg-elev));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--c-model) 30%, transparent);
+}
+.busqueda-hibrida-rr.is-kept {
+  border-color: var(--c-ok);
+  background: color-mix(in srgb, var(--c-ok) 7%, var(--bg-elev));
+}
+.busqueda-hibrida-rr.is-cut {
+  opacity: 0.38;
+}
+.busqueda-hibrida-rr-rank {
+  font: 700 13px var(--font-mono);
+  color: var(--text-2);
+  text-align: center;
+}
+.busqueda-hibrida-rr-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.busqueda-hibrida-rr-text {
+  font-size: 12px;
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.busqueda-hibrida-rr-score {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: flex-end;
+}
+.busqueda-hibrida-rr-score .busqueda-hibrida-bar {
+  width: 100%;
+}

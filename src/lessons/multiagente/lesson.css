@@ -1,0 +1,197 @@
+/* Lección: patrones multi-agente. Todas las clases con prefijo multiagente- */
+
+.multiagente-request {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--c-user) 35%, var(--border));
+  background: color-mix(in srgb, var(--c-user) 6%, var(--bg-elev));
+}
+.multiagente-stage {
+  margin: 4px 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-sunken);
+  padding: 8px;
+}
+
+/* mensajes que viajan entre agentes */
+.multiagente-packets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 8px;
+  min-height: 64px;
+}
+.multiagente-packet {
+  border: 1px solid color-mix(in srgb, var(--ptone) 40%, var(--border));
+  border-left: 4px solid var(--ptone);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--ptone) 6%, var(--bg-elev));
+  padding: 7px 10px;
+  min-width: 0;
+}
+.multiagente-packet-head {
+  font: 700 11px var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ptone);
+  margin-bottom: 3px;
+}
+.multiagente-packet-body {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* línea de tiempo (gantt) */
+.multiagente-gantt {
+  margin-top: 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elev);
+  padding: 10px 12px;
+}
+.multiagente-gantt-axis,
+.multiagente-gantt-row {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+}
+.multiagente-gantt-axis {
+  height: 16px;
+  margin-bottom: 4px;
+}
+.multiagente-gantt-row {
+  height: 24px;
+}
+.multiagente-gantt-label {
+  font: 600 11.5px var(--font-mono);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.multiagente-gantt-track {
+  position: relative;
+  height: 100%;
+  border-left: 1px solid var(--border-strong);
+}
+.multiagente-gantt-row .multiagente-gantt-track {
+  background: repeating-linear-gradient(90deg, transparent 0 39px, var(--grid) 39px 40px);
+}
+.multiagente-gantt-tick {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font: 10px var(--font-mono);
+  color: var(--text-3);
+}
+.multiagente-gantt-bar {
+  position: absolute;
+  top: 4px;
+  height: 16px;
+  border-radius: 4px;
+  transition:
+    opacity 0.4s,
+    box-shadow 0.3s;
+}
+.multiagente-gantt-bar[data-kind='llm'] {
+  background: var(--c-model);
+}
+.multiagente-gantt-bar[data-kind='tool'] {
+  background: var(--c-tool);
+  top: 7px;
+  height: 10px;
+}
+.multiagente-gantt-bar[data-state='todo'] {
+  opacity: 0.16;
+}
+.multiagente-gantt-bar[data-state='done'] {
+  opacity: 0.55;
+}
+.multiagente-gantt-bar[data-state='now'] {
+  opacity: 1;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--text) 25%, transparent);
+  animation: pop-in 0.4s both;
+}
+.multiagente-gantt-now-row {
+  height: 8px;
+}
+.multiagente-gantt-now-row .multiagente-gantt-track {
+  border-left-color: transparent;
+}
+.multiagente-gantt-window {
+  position: absolute;
+  top: 2px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--accent);
+  transition:
+    left 0.5s,
+    width 0.5s;
+}
+.multiagente-legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.multiagente-legend::before {
+  content: '';
+  width: 14px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--c-model);
+}
+.multiagente-legend[data-kind='tool']::before {
+  background: var(--c-tool);
+}
+@media (max-width: 520px) {
+  .multiagente-gantt-axis,
+  .multiagente-gantt-row {
+    grid-template-columns: 72px minmax(0, 1fr);
+  }
+  .multiagente-gantt-label {
+    font-size: 10px;
+  }
+}
+
+/* aislamiento de contexto */
+.multiagente-win {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.multiagente-win-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+.multiagente-win-head .mono {
+  font-weight: 500;
+  color: var(--text-2);
+}
+.multiagente-win-bar {
+  display: flex;
+  height: 18px;
+  border-radius: 5px;
+  background: var(--bg-inset);
+  overflow: hidden;
+}
+.multiagente-win-bar > span {
+  display: block;
+  height: 100%;
+  transition: width 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.multiagente-win-bar > span + span {
+  border-left: 1px solid var(--bg-elev);
+}

@@ -1,0 +1,300 @@
+/* Lección MCP — todas las clases con prefijo mcp- */
+
+/* ---------- diagrama de secuencia ---------- */
+.mcp-seq-wrap {
+  overflow-x: auto;
+  margin: 12px 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elev);
+}
+.mcp-seq {
+  display: block;
+  width: 100%;
+  min-width: 640px;
+  height: auto;
+}
+.mcp-lifeline {
+  stroke: var(--border-strong);
+  stroke-width: 1.4;
+  stroke-dasharray: 4 5;
+}
+.mcp-lane-box {
+  fill: var(--bg-sunken);
+  stroke: color-mix(in srgb, var(--tone) 45%, var(--border));
+  stroke-width: 1.4;
+  transition: fill 0.3s, stroke 0.3s;
+}
+.mcp-lane.is-on .mcp-lane-box {
+  fill: color-mix(in srgb, var(--tone) 14%, var(--bg-elev));
+  stroke: var(--tone);
+  stroke-width: 2.4;
+}
+.mcp-lane.is-on .mcp-lifeline {
+  stroke: color-mix(in srgb, var(--tone) 60%, transparent);
+}
+.mcp-lane-lbl {
+  fill: var(--text);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+}
+.mcp-lane-sub {
+  fill: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+}
+.mcp-arrow {
+  cursor: pointer;
+  opacity: 0.42;
+  transition: opacity 0.25s;
+}
+.mcp-arrow:hover {
+  opacity: 0.8;
+}
+.mcp-arrow.is-cur {
+  opacity: 1;
+}
+.mcp-hit {
+  fill: transparent;
+}
+.mcp-arrow-line {
+  stroke: var(--atone);
+  stroke-width: 1.6;
+  fill: none;
+}
+.mcp-arrow.is-cur .mcp-arrow-line {
+  stroke-width: 2.6;
+}
+.mcp-arrow.k-res .mcp-arrow-line {
+  stroke-dasharray: 6 4;
+}
+.mcp-arrow.k-notif .mcp-arrow-line {
+  stroke-dasharray: 2 4;
+}
+.mcp-arrow.k-self .mcp-arrow-line {
+  stroke-dasharray: 3 3;
+}
+.mcp-arrow-head {
+  fill: var(--atone);
+}
+.mcp-arrow-lbl {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--text-2);
+}
+.mcp-arrow.is-cur .mcp-arrow-lbl {
+  fill: var(--text);
+  font-weight: 600;
+}
+.mcp-ghost {
+  stroke: var(--border);
+  stroke-width: 1;
+  stroke-dasharray: 1 6;
+}
+.mcp-packet {
+  fill: var(--atone, var(--accent));
+  filter: drop-shadow(0 0 4px var(--atone, var(--accent)));
+}
+
+.mcp-legend {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+}
+.mcp-legend span {
+  color: var(--tone);
+}
+
+.mcp-step-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: 18px;
+  align-items: start;
+}
+.mcp-step-detail.is-wide {
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (max-width: 900px) {
+  .mcp-step-detail {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.mcp-chat-bubble {
+  border-radius: 14px;
+  padding: 10px 14px;
+  background: color-mix(in srgb, var(--tone) 10%, var(--bg-elev));
+  border: 1px solid color-mix(in srgb, var(--tone) 35%, transparent);
+  color: var(--text);
+  font-size: 15px;
+}
+
+/* ---------- roles ---------- */
+.mcp-roles {
+  overflow-x: auto;
+}
+.mcp-roles .flow {
+  min-width: 560px;
+}
+
+/* ---------- transportes ---------- */
+.mcp-wire-stage {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elev);
+}
+.mcp-wire-svg {
+  display: block;
+  width: 100%;
+  min-width: 560px;
+  height: auto;
+}
+.mcp-proc-box {
+  fill: var(--bg-sunken);
+  stroke: color-mix(in srgb, var(--tone) 40%, var(--border));
+  stroke-width: 1.5;
+  transition: fill 0.3s, stroke 0.3s;
+}
+.mcp-proc.is-on .mcp-proc-box {
+  fill: color-mix(in srgb, var(--tone) 12%, var(--bg-elev));
+  stroke: var(--tone);
+  stroke-width: 2.4;
+}
+.mcp-proc.is-target .mcp-proc-box {
+  stroke: var(--tone);
+}
+.mcp-proc-title {
+  fill: var(--text);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+}
+.mcp-proc-sub {
+  fill: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.mcp-proc-inner {
+  fill: color-mix(in srgb, var(--tone) 10%, var(--bg-elev));
+  stroke: color-mix(in srgb, var(--tone) 55%, transparent);
+  stroke-width: 1.4;
+}
+.mcp-proc-inner-t {
+  fill: var(--text);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+.mcp-working {
+  fill: var(--c-tool);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  animation: mcp-blink 0.9s ease-in-out infinite;
+}
+@keyframes mcp-blink {
+  50% {
+    opacity: 0.3;
+  }
+}
+.mcp-pipe path {
+  fill: none;
+  stroke: var(--border-strong);
+  stroke-width: 7;
+  stroke-linecap: round;
+  opacity: 0.6;
+  transition: stroke 0.3s;
+}
+.mcp-pipe.is-on path {
+  stroke: var(--atone);
+  opacity: 0.5;
+}
+.mcp-pipe.is-dashed path {
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+}
+.mcp-pipe text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  fill: var(--text-2);
+}
+.mcp-pipe.is-on text {
+  fill: var(--text);
+  font-weight: 600;
+}
+.mcp-cloud rect {
+  fill: var(--bg-inset);
+  stroke: var(--border-strong);
+  stroke-dasharray: 5 4;
+}
+.mcp-cloud text {
+  fill: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.mcp-lb-link {
+  fill: none;
+  stroke: var(--border-strong);
+  stroke-width: 1.5;
+}
+.mcp-proc.is-target .mcp-lb-link {
+  stroke: var(--c-tool);
+  stroke-width: 2.2;
+}
+.mcp-facts {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.mcp-facts p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-2);
+  border-left: 3px solid var(--border-strong);
+  padding-left: 10px;
+}
+@media (max-width: 640px) {
+  .mcp-facts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- servidor ---------- */
+.mcp-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  color: var(--text-2);
+  cursor: pointer;
+}
+.mcp-check input {
+  accent-color: var(--accent);
+}
+.mcp-part-chip {
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elev);
+  border-radius: 99px;
+  padding: 3px 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-2);
+  cursor: pointer;
+}
+.mcp-part-chip:hover {
+  border-color: var(--c-tool);
+}
+.mcp-part-chip.is-on {
+  background: color-mix(in srgb, var(--c-tool) 14%, var(--bg-elev));
+  border-color: var(--c-tool);
+  color: var(--text);
+}
+.mcp-clickcode .ln {
+  cursor: pointer;
+}
+.mcp-clickcode .ln:hover {
+  background: color-mix(in srgb, var(--c-tool) 8%, transparent);
+}
